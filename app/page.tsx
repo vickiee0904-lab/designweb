@@ -1,322 +1,414 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import {
+  ArrowRight,
+  Brain,
+  Camera,
+  EnvelopeSimple,
+  FigmaLogo,
+  LinkedinLogo,
+  MouseSimple,
+  PenNib,
+  Shapes,
+  Strategy,
+  UserFocus,
+  X,
+} from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
+import CharacterHero from "./components/CharacterHero";
+import { researchDataPlatform } from "./data/projects";
 
-const projects = [
+const capabilities = [
+  { label: "产品策略", icon: Strategy },
+  { label: "用户体验", icon: UserFocus },
+  { label: "视觉系统", icon: Shapes },
+  { label: "原型设计", icon: FigmaLogo },
+  { label: "AI 协作", icon: Brain },
+];
+
+const projectCards = [
   {
-    no: "01",
-    title: "MORI 森野",
-    type: "品牌体验",
-    year: "2025",
-    color: "#ff6b45",
-    desc: "为城市轻食品牌建立从空间到数字触点的统一语言。",
-    tags: ["策略", "品牌", "空间"],
+    src: "/assets/portfolio/research-data-platform-card-reference.png",
+    width: 3840,
+    height: 2160,
+    cardClass: "project-card-reference",
+    index: researchDataPlatform.index,
+    type: researchDataPlatform.type,
+    title: researchDataPlatform.title,
+    summary: researchDataPlatform.summary,
+    href: researchDataPlatform.href,
+    meta: [
+      { label: "ROLE", value: researchDataPlatform.role },
+      { label: "PERIOD", value: researchDataPlatform.period },
+      { label: "TYPE", value: researchDataPlatform.projectType },
+    ],
   },
   {
-    no: "02",
-    title: "NEBULA OS",
-    type: "产品设计",
-    year: "2024",
-    color: "#6c7cff",
-    desc: "把复杂的 AI 工作流，变成安静、清晰且值得信任的日常工具。",
-    tags: ["UX", "交互", "系统"],
+    src: "/assets/portfolio/project-card-sleep-editorial-v2.png",
+    width: 900,
+    height: 1125,
+    cardClass: "",
+    index: "02",
+    type: "MOBILE APP",
+    title: "AI 睡眠伴侣",
+    summary: "将睡眠数据、建议和情绪反馈转译成平静可信的日常体验。",
+    href: "/work/ai-sleep-companion",
+    meta: [
+      { label: "ROLE", value: "体验设计 · 视觉系统" },
+      { label: "YEAR", value: "2025" },
+      { label: "OUTCOME", value: "让复杂的睡眠数据成为每天都能理解和执行的温和建议。" },
+    ],
   },
   {
-    no: "03",
-    title: "流动档案",
-    type: "数字艺术",
-    year: "2024",
-    color: "#a8ff78",
-    desc: "一场由声音和城市记忆共同驱动的生成式线上展览。",
-    tags: ["创意编程", "声音", "Web"],
+    src: "/assets/portfolio/project-card-data-editorial-v2.png",
+    width: 900,
+    height: 1125,
+    cardClass: "",
+    index: "03",
+    type: "DATA PRODUCT",
+    title: "数据运营驾驶舱",
+    summary: "帮助运营团队快速发现异常、理解趋势并采取行动。",
+    href: null,
+    meta: [
+      { label: "ROLE", value: "数据体验 · 原型设计" },
+      { label: "YEAR", value: "2024" },
+      { label: "OUTCOME", value: "把分散的指标与告警组织成面向决策的实时工作台。" },
+    ],
   },
 ];
 
-const experience = [
-  ["2023 — NOW", "独立设计师 / 上海", "品牌、数字产品与互动体验"],
-  ["2020 — 2023", "Studio Parallel / 设计负责人", "带领 6 人团队完成 20+ 项目"],
-  ["2018 — 2020", "Nova Lab / 交互设计师", "探索新媒介与未来界面"],
-];
-
-function MagneticButton({
+function MagneticLink({
   children,
   href,
-  tone = "light",
+  className = "",
 }: {
   children: React.ReactNode;
   href: string;
-  tone?: "light" | "dark";
+  className?: string;
 }) {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+
   return (
     <a
+      className={`magnetic-link ${className}`}
       href={href}
-      className={`magnetic-button ${tone}`}
-      style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
-      onMouseMove={(event) => {
+      style={{ transform: `translate3d(${offset.x}px, ${offset.y}px, 0)` }}
+      onPointerMove={(event) => {
         const rect = event.currentTarget.getBoundingClientRect();
-        setPosition({
-          x: (event.clientX - rect.left - rect.width / 2) * 0.15,
-          y: (event.clientY - rect.top - rect.height / 2) * 0.15,
+        setOffset({
+          x: (event.clientX - rect.left - rect.width / 2) * 0.12,
+          y: (event.clientY - rect.top - rect.height / 2) * 0.16,
         });
       }}
-      onMouseLeave={() => setPosition({ x: 0, y: 0 })}
+      onPointerLeave={() => setOffset({ x: 0, y: 0 })}
     >
       <span>{children}</span>
-      <span aria-hidden="true">↗</span>
+      <ArrowRight size={17} weight="bold" aria-hidden="true" />
     </a>
   );
 }
 
 export default function Home() {
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [activeProject, setActiveProject] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [cursor, setCursor] = useState({ x: -100, y: -100, active: false });
-  const year = useMemo(() => new Date().getFullYear(), []);
+  const [caseOpen, setCaseOpen] = useState(false);
+  const [activeCard, setActiveCard] = useState(0);
+  const rootRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const onMove = (event: MouseEvent) => {
-      setMouse({
-        x: event.clientX / window.innerWidth - 0.5,
-        y: event.clientY / window.innerHeight - 0.5,
-      });
-      setCursor((prev) => ({ ...prev, x: event.clientX, y: event.clientY }));
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setCaseOpen(false);
     };
-    const onScroll = () => {
-      const height = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollProgress(height > 0 ? window.scrollY / height : 0);
-    };
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("is-visible");
+        });
+      },
+      { threshold: 0.14 },
+    );
+
+    rootRef.current
+      ?.querySelectorAll<HTMLElement>("[data-reveal]")
+      .forEach((element) => observer.observe(element));
+    window.addEventListener("keydown", onKeyDown);
+
     return () => {
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("scroll", onScroll);
+      observer.disconnect();
+      window.removeEventListener("keydown", onKeyDown);
     };
   }, []);
 
-  const cursorHandlers = {
-    onMouseEnter: () => setCursor((prev) => ({ ...prev, active: true })),
-    onMouseLeave: () => setCursor((prev) => ({ ...prev, active: false })),
-  };
-
   return (
-    <main>
-      <div className="noise" aria-hidden="true" />
-      <div
-        className={`cursor ${cursor.active ? "active" : ""}`}
-        style={{ transform: `translate3d(${cursor.x}px, ${cursor.y}px, 0)` }}
-        aria-hidden="true"
-      />
-      <div
-        className="scroll-progress"
-        style={{ transform: `scaleX(${scrollProgress})` }}
-      />
-
-      <nav className="nav">
-        <a className="logo" href="#top" aria-label="Linn 主页">
-          LINN<span>®</span>
+    <main ref={rootRef}>
+      <nav className="site-nav" aria-label="主导航">
+        <a className="identity" href="#top" aria-label="LINN 首页">
+          <strong>LINN</strong>
+          <span>UI / UX DESIGNER</span>
         </a>
-        <div className={`nav-links ${menuOpen ? "open" : ""}`}>
-          <a href="#work" onClick={() => setMenuOpen(false)}>项目</a>
-          <a href="#about" onClick={() => setMenuOpen(false)}>关于</a>
-          <a href="#contact" onClick={() => setMenuOpen(false)}>联系</a>
-        </div>
+
         <button
-          className="menu-button"
-          aria-label="切换导航"
+          className="menu-toggle"
+          aria-label="打开或关闭导航"
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((value) => !value)}
         >
           {menuOpen ? "关闭" : "菜单"}
         </button>
-        <span className="availability"><i /> 可接受新项目</span>
+
+        <div className={`nav-links ${menuOpen ? "is-open" : ""}`}>
+          <a href="#work" onClick={() => setMenuOpen(false)}>作品</a>
+          <a href="#about" onClick={() => setMenuOpen(false)}>关于</a>
+          <a href="#playground" onClick={() => setMenuOpen(false)}>日常</a>
+          <a href="#contact" onClick={() => setMenuOpen(false)}>联系</a>
+        </div>
       </nav>
 
       <section className="hero" id="top">
-        <div className="hero-copy">
-          <p className="eyebrow reveal">LINN / 多学科设计师 / SHANGHAI</p>
-          <h1 className="hero-title">
-            <span className="line"><span>让想法</span></span>
-            <span className="line italic"><span>被感知，</span></span>
-            <span className="line accent"><span>让体验发生。</span></span>
+        <div className="hero-copy" id="about">
+          <p className="kicker hero-kicker">产品思维 · 视觉表达 · AI 协作</p>
+          <h1>
+            设计清晰、好用且
+            <span>富有表现力的数字体验。</span>
           </h1>
-          <div className="hero-bottom reveal">
-            <p>
-              我是林，一名游走在品牌、产品与新媒介之间的设计师。
-              我把复杂问题，翻译成简单但不无聊的体验。
-            </p>
-            <MagneticButton href="#work">查看精选项目</MagneticButton>
-          </div>
+          <p className="hero-description">
+            我是 LINN，一名专注产品体验与视觉系统的 UI 设计师。
+            在复杂需求与真实用户之间，建立清晰、可信且令人愉悦的连接。
+          </p>
+          <MagneticLink href="#work">探索精选作品</MagneticLink>
+          <a className="scroll-hint" href="#work">
+            <MouseSimple size={19} weight="light" aria-hidden="true" />
+            <span>向下滚动</span>
+          </a>
         </div>
 
-        <div
-          className="avatar-stage"
-          style={{
-            "--mx": `${mouse.x * 22}px`,
-            "--my": `${mouse.y * 18}px`,
-          } as React.CSSProperties}
-          {...cursorHandlers}
-        >
-          <div className="orbit orbit-one" />
-          <div className="orbit orbit-two" />
-          <div className="avatar-card">
-            <div className="avatar-glow" />
-            <div className="avatar" aria-label="虚拟设计师 Linn 的动态数字分身">
-              <div className="hair hair-back" />
-              <div className="neck" />
-              <div className="body">
-                <div className="jacket-line" />
-                <span className="badge">L/01</span>
-              </div>
-              <div className="face">
-                <div className="ear left" />
-                <div className="ear right"><i /></div>
-                <div className="hair hair-front" />
-                <div className="brow left" />
-                <div className="brow right" />
-                <div className="eye left"><i /></div>
-                <div className="eye right"><i /></div>
-                <div className="nose" />
-                <div className="mouth" />
-              </div>
-            </div>
-            <div className="scan-line" />
-            <div className="avatar-meta top">
-              <span>VIRTUAL IDENTITY</span><b>ONLINE</b>
-            </div>
-            <div className="avatar-meta bottom">
-              <span>LINN.01</span><b>31.2304° N</b>
-            </div>
-          </div>
-          <p className="drag-note">移动光标，与 LINN 相遇</p>
-        </div>
-        <div className="hero-index">01 — 05</div>
+        <CharacterHero />
       </section>
 
-      <section className="marquee" aria-label="设计服务">
-        <div>
-          品牌策略 <i>✦</i> 数字产品 <i>✦</i> 互动体验 <i>✦</i> 创意技术 <i>✦</i>
-          品牌策略 <i>✦</i> 数字产品 <i>✦</i> 互动体验 <i>✦</i> 创意技术 <i>✦</i>
-        </div>
-      </section>
-
-      <section className="projects" id="work">
-        <header className="section-head">
+      <section className="selected-work" id="work">
+        <header className="section-heading" data-reveal>
           <div>
-            <span className="section-no">02</span>
-            <p className="eyebrow">SELECTED WORK / 2023—2025</p>
+            <p className="kicker">SELECTED WORK / 2023—2026</p>
+            <h2>精选作品</h2>
           </div>
-          <h2>精选项目 <sup>03</sup></h2>
-          <p>每个项目，都是一次<br />从“为什么”到“哇”的旅程。</p>
+          <span>点击作品，查看完整案例</span>
         </header>
 
-        <div className="project-layout">
-          <div className="project-list">
-            {projects.map((project, index) => (
-              <button
-                key={project.title}
-                className={`project-row ${activeProject === index ? "active" : ""}`}
-                onMouseEnter={() => setActiveProject(index)}
-                onFocus={() => setActiveProject(index)}
-                onClick={() => setActiveProject(index)}
-              >
-                <span>{project.no}</span>
-                <strong>{project.title}</strong>
-                <em>{project.type}</em>
-                <small>{project.year}</small>
-                <i aria-hidden="true">↗</i>
-              </button>
-            ))}
+        <div className="project-showcase" data-reveal>
+          <div className="project-feature" data-selected-card={activeCard + 1}>
+            <div
+              className="project-deck"
+              onPointerMove={(event) => {
+                const rect = event.currentTarget.getBoundingClientRect();
+                const x = (event.clientX - rect.left) / rect.width - 0.5;
+                const y = (event.clientY - rect.top) / rect.height - 0.5;
+                event.currentTarget.style.setProperty("--deck-x", `${x * 5}deg`);
+                event.currentTarget.style.setProperty("--deck-y", `${y * -4}deg`);
+              }}
+              onPointerLeave={(event) => {
+                event.currentTarget.style.setProperty("--deck-x", "0deg");
+                event.currentTarget.style.setProperty("--deck-y", "0deg");
+              }}
+            >
+              <div className="project-deck-perspective" role="group" aria-label="选择精选作品">
+                {projectCards.map((project, index) => {
+                  const offset = (index - activeCard + projectCards.length) % projectCards.length;
+                  const positionClass =
+                    offset === 0 ? "is-selected" : offset === 1 ? "is-back-far" : "is-back-near";
+
+                  return (
+                    <button
+                      type="button"
+                      className={`project-card project-card-${index + 1} ${project.cardClass} ${positionClass}`}
+                      key={project.title}
+                      aria-label={`选择${project.title}`}
+                      aria-pressed={activeCard === index}
+                      onClick={() => setActiveCard(index)}
+                    >
+                      <Image
+                        src={project.src}
+                        alt={`${project.title}项目界面`}
+                        width={project.width}
+                        height={project.height}
+                        sizes="(max-width: 700px) 72vw, 46vw"
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <aside className="project-info" aria-live="polite" key={activeCard}>
+              <div className="project-info-index">
+                {projectCards[activeCard].index}
+                <span>/ 03</span>
+              </div>
+              <p className="project-info-type">{projectCards[activeCard].type}</p>
+              <h3 className={projectCards[activeCard].index === researchDataPlatform.index ? "is-long" : undefined}>
+                {projectCards[activeCard].title}
+              </h3>
+              <p className="project-info-summary">{projectCards[activeCard].summary}</p>
+
+              <dl>
+                {projectCards[activeCard].meta.map((item) => (
+                  <div key={item.label}>
+                    <dt>{item.label}</dt>
+                    <dd>{item.value}</dd>
+                  </div>
+                ))}
+              </dl>
+
+              {projectCards[activeCard].href ? (
+                <Link className="project-case-link" href={projectCards[activeCard].href}>
+                  查看完整案例
+                  <ArrowRight size={16} weight="bold" aria-hidden="true" />
+                </Link>
+              ) : (
+                <button className="project-case-link" type="button" onClick={() => setCaseOpen(true)}>
+                  查看完整案例
+                  <ArrowRight size={16} weight="bold" aria-hidden="true" />
+                </button>
+              )}
+
+              <div className="project-stepper" aria-label="切换项目">
+                <button
+                  type="button"
+                  aria-label="上一个项目"
+                  onClick={() => setActiveCard((activeCard + projectCards.length - 1) % projectCards.length)}
+                >
+                  <ArrowRight size={15} weight="bold" aria-hidden="true" />
+                </button>
+                <div>
+                  {projectCards.map((project, index) => (
+                    <button
+                      type="button"
+                      className={activeCard === index ? "is-active" : ""}
+                      key={project.index}
+                      aria-label={`查看项目 ${project.index}`}
+                      aria-pressed={activeCard === index}
+                      onClick={() => setActiveCard(index)}
+                    />
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  aria-label="下一个项目"
+                  onClick={() => setActiveCard((activeCard + 1) % projectCards.length)}
+                >
+                  <ArrowRight size={15} weight="bold" aria-hidden="true" />
+                </button>
+              </div>
+            </aside>
           </div>
+        </div>
+
+        {caseOpen && (
           <div
-            className="project-preview"
-            style={{ "--project-color": projects[activeProject].color } as React.CSSProperties}
-            {...cursorHandlers}
+            className="case-dialog-backdrop"
+            role="presentation"
+            onClick={() => setCaseOpen(false)}
           >
-            <div className="preview-grid" />
-            <div className="preview-disc">
-              <span>{projects[activeProject].no}</span>
-            </div>
-            <div className="preview-window">
-              <span>CASE STUDY</span>
-              <strong>{projects[activeProject].title}</strong>
-              <div className="mini-lines"><i /><i /><i /></div>
-            </div>
-            <div className="project-info">
-              <p>{projects[activeProject].desc}</p>
-              <div>{projects[activeProject].tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-            </div>
+            <section
+              className="case-dialog"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="case-dialog-title"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div>
+                <p className="kicker">FEATURED CASE STUDIES</p>
+                <h3 id="case-dialog-title">三个项目，三种复杂问题</h3>
+              </div>
+              <button
+                type="button"
+                className="dialog-close"
+                aria-label="关闭项目介绍"
+                onClick={() => setCaseOpen(false)}
+              >
+                <X size={20} />
+              </button>
+              <div className="case-list">
+                {projectCards.map((project) => (
+                  <article key={project.index}>
+                    <span>{project.index} / {project.type}</span>
+                    <strong>{project.title}</strong>
+                    <p>{project.summary}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
           </div>
-        </div>
+        )}
       </section>
 
-      <section className="about" id="about">
-        <div className="about-intro">
-          <span className="section-no">03</span>
-          <p className="eyebrow">ABOUT / METHOD</p>
-        </div>
-        <div className="about-statement">
-          <h2>
-            好设计不是装饰，<br />
-            它是<span>清晰</span>、<span>共情</span>，<br />
-            还有一点点<span>意外</span>。
-          </h2>
-          <div className="about-aside">
-            <div className="mini-avatar"><i /><b /></div>
-            <p>8 年设计经验<br />合作项目遍布 6 个城市</p>
-          </div>
-        </div>
-        <div className="principles">
-          <article>
-            <span>01</span><h3>问对问题</h3>
-            <p>在画第一个框之前，先找到真正值得解决的问题。</p>
-          </article>
-          <article>
-            <span>02</span><h3>系统地想</h3>
-            <p>让每个细节都有理由，也让它们共同组成更大的秩序。</p>
-          </article>
-          <article>
-            <span>03</span><h3>大胆地试</h3>
-            <p>原型不是终点，而是让想法尽快与真实世界碰面的方式。</p>
-          </article>
-        </div>
-      </section>
-
-      <section className="experience">
-        <header className="section-head compact">
-          <div><span className="section-no">04</span><p className="eyebrow">EXPERIENCE</p></div>
-          <h2>经历</h2>
-        </header>
-        <div className="timeline">
-          {experience.map(([date, role, detail], index) => (
-            <div className="timeline-row" key={date}>
-              <span>{date}</span>
-              <strong>{role}</strong>
-              <p>{detail}</p>
-              <i>{String(index + 1).padStart(2, "0")}</i>
-            </div>
+      <section className="capability-strip" aria-label="设计能力">
+        <p>能力与经验</p>
+        <div>
+          {capabilities.map(({ label, icon: Icon }) => (
+            <span key={label}>
+              <Icon size={22} weight="light" aria-hidden="true" />
+              {label}
+            </span>
           ))}
         </div>
       </section>
 
+      <section className="beyond" id="playground">
+        <div className="beyond-copy" data-reveal>
+          <p className="kicker">BEYOND THE SCREEN</p>
+          <h2>屏幕之外</h2>
+          <p>摄影 · 绘画 · 视觉笔记</p>
+          <a href="#gallery">
+            浏览更多
+            <ArrowRight size={16} weight="bold" aria-hidden="true" />
+          </a>
+        </div>
+        <div className="life-gallery" id="gallery" data-reveal>
+          <Image
+            src="/assets/portfolio/life-gallery.png"
+            alt="山峰、静物、街头摄影、建筑绘画与植物摄影作品合集"
+            width={731}
+            height={208}
+            sizes="(max-width: 760px) 100vw, 72vw"
+          />
+        </div>
+      </section>
+
       <footer id="contact">
-        <div className="footer-status"><i /> HAVE A PROJECT IN MIND?</div>
-        <h2>一起做点<br /><span>有意思的。</span></h2>
-        <div className="footer-row">
-          <MagneticButton href="mailto:hello@linn.design" tone="dark">hello@linn.design</MagneticButton>
-          <div className="socials">
-            <a href="#top">小红书 ↗</a>
-            <a href="#top">Behance ↗</a>
-            <a href="#top">LinkedIn ↗</a>
+        <div className="footer-ribbon" aria-hidden="true">
+          <Image
+            src="/assets/portfolio/luminous-ribbon-clean.png"
+            alt=""
+            fill
+            sizes="100vw"
+          />
+        </div>
+        <div className="footer-content" data-reveal>
+          <p className="kicker">HAVE A PROJECT IN MIND?</p>
+          <h2>一起创造有意义的体验</h2>
+          <MagneticLink href="mailto:hello@linn.design" className="contact-link">
+            联系我
+          </MagneticLink>
+          <div className="social-links">
+            <a href="mailto:hello@linn.design" aria-label="发送邮件">
+              <EnvelopeSimple size={21} weight="light" />
+            </a>
+            <a href="#top" aria-label="LinkedIn">
+              <LinkedinLogo size={21} weight="light" />
+            </a>
+            <a href="#playground" aria-label="摄影与绘画">
+              <Camera size={21} weight="light" />
+            </a>
+            <a href="#playground" aria-label="视觉笔记">
+              <PenNib size={21} weight="light" />
+            </a>
           </div>
         </div>
-        <div className="copyright">
-          <span>© {year} LINN STUDIO</span>
-          <span>DESIGNED WITH CURIOSITY &amp; COFFEE</span>
-          <a href="#top">回到顶部 ↑</a>
+        <div className="footer-meta">
+          <span>© 2026 LINN</span>
+          <a href="#top">返回顶部</a>
         </div>
       </footer>
     </main>
