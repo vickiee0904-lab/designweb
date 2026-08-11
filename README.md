@@ -1,6 +1,6 @@
 # XIA Portfolio
 
-XIA 的个人设计作品集网站，展示 UI/UX 项目、设计方法、AI 辅助设计实践、个人创作与联系方式。
+XIA 的个人设计网站，展示 UI/UX 项目、设计方法、AI 辅助设计实践、个人创作与联系方式。
 
 网站采用深海军蓝视觉体系，包含磁吸极光、人物动态展示、透视项目卡片、粒子波浪与响应式交互。
 
@@ -22,7 +22,7 @@ npm run build
 - `/v1`：首页历史版本
 - `/daily`：摄影、绘画与视觉练习
 - `/work/research-data-platform`：科研数据管理平台案例
-- `/work/ai-sleep-companion`：AI 睡眠伴侣案例
+- `/work/ai-sleep-companion`：移动端本地电商案例
 - `/work/data-operations-dashboard`：数据运营监控平台案例
 
 ## 技术栈
