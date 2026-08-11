@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LINN — 多学科设计师",
-  description: "独立设计师 LINN 的个人作品集：品牌、数字产品与互动体验。",
+  title: "XIA — 多学科设计师",
+  description: "独立设计师 XIA 的个人作品集：品牌、数字产品与互动体验。",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

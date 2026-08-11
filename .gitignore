@@ -40,3 +40,11 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# local QA and generated working artifacts
+/qa-evidence/
+/tmp/
+/output/
+/design-qa.md
+/fluid-interaction-research.md
+/PROJECT_HANDOFF.md
