@@ -4,6 +4,12 @@ XIA 的个人设计网站，展示 UI/UX 项目、设计方法、AI 辅助设计
 
 网站采用深海军蓝视觉体系，包含磁吸极光、人物动态展示、透视项目卡片、粒子波浪与响应式交互。
 
+## 在线访问
+
+[https://vickiee0904-lab.github.io/designweb/](https://vickiee0904-lab.github.io/designweb/)
+
+`main` 分支更新后，GitHub Actions 会自动构建并发布 GitHub Pages。
+
 ## Prerequisites
 
 - Node.js `>=22.13.0`

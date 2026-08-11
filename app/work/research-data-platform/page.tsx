@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowsOut, CaretLeft, CaretRight, X } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { researchDataPlatform } from "../../data/projects";
+import { sitePath } from "../../lib/site-path";
 
 const chapters = [
   { id: "overview", label: "项目概览", pages: [1] },
@@ -15,7 +16,7 @@ const chapters = [
 ];
 
 const imagePath = (page: number) =>
-  `/assets/portfolio/research-data-platform/page-${String(page).padStart(2, "0")}.webp`;
+  sitePath(`/assets/portfolio/research-data-platform/page-${String(page).padStart(2, "0")}.webp`);
 
 export default function ResearchDataPlatformPage() {
   const [activeChapter, setActiveChapter] = useState(chapters[0].id);

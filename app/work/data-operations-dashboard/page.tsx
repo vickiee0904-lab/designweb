@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowClockwise, ArrowLeft, ArrowSquareOut, ArrowsOut, CaretLeft, CaretRight, X } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { dataOperationsDashboard } from "../../data/projects";
+import { sitePath } from "../../lib/site-path";
 
 const pageCount = 3;
 const liveDemoUrl = "https://vickiee0904-lab.github.io/lab-dashboard/";
@@ -22,7 +23,7 @@ const navigationChapters = [
 ];
 
 const imagePath = (page: number) =>
-  `/assets/portfolio/data-operations-dashboard/page-${String(page).padStart(2, "0")}.webp`;
+  sitePath(`/assets/portfolio/data-operations-dashboard/page-${String(page).padStart(2, "0")}.webp`);
 
 export default function DataOperationsDashboardPage() {
   const [activeChapter, setActiveChapter] = useState(navigationChapters[0].id);

@@ -288,7 +288,7 @@ button {
 
 .selected-work::before {
   inset: -22% -12%;
-  background: url("/assets/portfolio/selected-work-ambient.png") center / cover no-repeat;
+  background: var(--selected-work-ambient-image) center / cover no-repeat;
   opacity: 0.25;
   filter: saturate(0.72) brightness(0.72) blur(8px);
   mix-blend-mode: screen;

@@ -6,10 +6,11 @@ import {
   Camera,
   PenNib,
 } from "@phosphor-icons/react/dist/ssr";
+import { sitePath } from "../lib/site-path";
 
 const photographs = [
   {
-    src: "/assets/portfolio/daily/mountain.png",
+    src: sitePath("/assets/portfolio/daily/mountain.png"),
     width: 276,
     height: 342,
     title: "雪线之上",
@@ -17,7 +18,7 @@ const photographs = [
     alt: "云雾中的雪山",
   },
   {
-    src: "/assets/portfolio/daily/still-life.png",
+    src: sitePath("/assets/portfolio/daily/still-life.png"),
     width: 276,
     height: 286,
     title: "静物与时间",
@@ -25,7 +26,7 @@ const photographs = [
     alt: "花枝、花瓶与圆形石膏静物",
   },
   {
-    src: "/assets/portfolio/daily/street-light.png",
+    src: sitePath("/assets/portfolio/daily/street-light.png"),
     width: 257,
     height: 342,
     title: "一束光经过",
@@ -33,7 +34,7 @@ const photographs = [
     alt: "窄巷中穿过建筑的一束阳光",
   },
   {
-    src: "/assets/portfolio/daily/city-sketch.png",
+    src: sitePath("/assets/portfolio/daily/city-sketch.png"),
     width: 250,
     height: 300,
     title: "城市线稿",
@@ -41,7 +42,7 @@ const photographs = [
     alt: "欧式街道与建筑的浅色线稿",
   },
   {
-    src: "/assets/portfolio/daily/branch-shadow.png",
+    src: sitePath("/assets/portfolio/daily/branch-shadow.png"),
     width: 304,
     height: 342,
     title: "午后的影子",

@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { sitePath } from "../lib/site-path";
 
 const characterFrames = [
-  "/assets/portfolio/character-hero/metro-pulse-laptop/frame-01.png",
-  "/assets/portfolio/character-hero/metro-pulse-laptop/frame-02.png",
-  "/assets/portfolio/character-hero/metro-pulse-laptop/frame-03.png",
-  "/assets/portfolio/character-hero/metro-pulse-laptop/frame-04.png",
+  sitePath("/assets/portfolio/character-hero/metro-pulse-laptop/frame-01.png"),
+  sitePath("/assets/portfolio/character-hero/metro-pulse-laptop/frame-02.png"),
+  sitePath("/assets/portfolio/character-hero/metro-pulse-laptop/frame-03.png"),
+  sitePath("/assets/portfolio/character-hero/metro-pulse-laptop/frame-04.png"),
 ];
 
 const motionPlan = [

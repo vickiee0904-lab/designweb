@@ -17,11 +17,12 @@ import {
   Strategy,
   UserFocus,
 } from "@phosphor-icons/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import CharacterHero from "./CharacterHero";
 import FooterParticles from "./FooterParticles";
 import HeroAmbient from "./HeroAmbient";
 import { dataOperationsDashboard, mobileCommerce, researchDataPlatform } from "../data/projects";
+import { sitePath } from "../lib/site-path";
 
 const capabilities = [
   { label: "产品策略", icon: Strategy },
@@ -33,7 +34,7 @@ const capabilities = [
 
 const projectCards = [
   {
-    src: "/assets/portfolio/research-data-platform/page-01.webp",
+    src: sitePath("/assets/portfolio/research-data-platform/page-01.webp"),
     width: 3840,
     height: 2160,
     cardClass: "project-card-reference",
@@ -49,7 +50,7 @@ const projectCards = [
     ],
   },
   {
-    src: "/assets/portfolio/mobile-commerce/page-01.webp",
+    src: sitePath("/assets/portfolio/mobile-commerce/page-01.webp"),
     width: 3840,
     height: 2160,
     cardClass: "project-card-reference",
@@ -65,7 +66,7 @@ const projectCards = [
     ],
   },
   {
-    src: "/assets/portfolio/data-operations-dashboard/page-01.webp",
+    src: sitePath("/assets/portfolio/data-operations-dashboard/page-01.webp"),
     width: 3840,
     height: 2160,
     cardClass: "project-card-reference",
@@ -208,7 +209,13 @@ export default function PortfolioHome({ version = "v1" }: { version?: "v1" | "v2
   }, []);
 
   return (
-    <main ref={rootRef} className={isV2 ? "portfolio-home portfolio-home-v2" : undefined}>
+    <main
+      ref={rootRef}
+      className={isV2 ? "portfolio-home portfolio-home-v2" : undefined}
+      style={{
+        "--selected-work-ambient-image": `url("${sitePath("/assets/portfolio/selected-work-ambient.png")}")`,
+      } as CSSProperties}
+    >
       {isV2 ? <a className="skip-link" href="#work">跳至主要内容</a> : null}
       <nav className="site-nav" aria-label="主导航">
         <a className="identity" href="#top" aria-label="XIA 首页">
@@ -425,7 +432,7 @@ export default function PortfolioHome({ version = "v1" }: { version?: "v1" | "v2
             <div className="resume-panel" data-reveal>
               <a
                 className="resume-card"
-                href="/assets/resume/xia-ui-ux-designer-resume.pdf"
+                href={sitePath("/assets/resume/xia-ui-ux-designer-resume.pdf")}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="在新标签页查看 XIA 的 PDF 简历"
@@ -504,7 +511,7 @@ export default function PortfolioHome({ version = "v1" }: { version?: "v1" | "v2
                   ].map((title, index) => (
                     <span className={`ai-board-thumb ai-board-thumb-${index + 1}`} key={title}>
                       <Image
-                        src="/assets/portfolio/ai-design-system/figma-design-system-overview.png"
+                        src={sitePath("/assets/portfolio/ai-design-system/figma-design-system-overview.png")}
                         alt=""
                         width={433}
                         height={1600}
@@ -588,7 +595,7 @@ export default function PortfolioHome({ version = "v1" }: { version?: "v1" | "v2
           </div>
           <div className="life-gallery" id="gallery" data-reveal>
             <Image
-              src="/assets/portfolio/life-gallery.png"
+              src={sitePath("/assets/portfolio/life-gallery.png")}
               alt="山峰、静物、街头摄影、建筑绘画与植物摄影作品合集"
               width={731}
               height={208}
@@ -611,7 +618,7 @@ export default function PortfolioHome({ version = "v1" }: { version?: "v1" | "v2
             <div className="footer-direct-contact">
               <a href="mailto:lingxiao0904@qq.com">lingxiao0904@qq.com</a>
               <a
-                href="/assets/resume/xia-ui-ux-designer-resume.pdf"
+                href={sitePath("/assets/resume/xia-ui-ux-designer-resume.pdf")}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -626,10 +633,10 @@ export default function PortfolioHome({ version = "v1" }: { version?: "v1" | "v2
             <a href="#top" aria-label="LinkedIn">
               <LinkedinLogo size={21} weight="light" />
             </a>
-            <a href={isV2 ? "/daily#photography" : "#playground"} aria-label="摄影">
+            <a href={isV2 ? sitePath("/daily#photography") : "#playground"} aria-label="摄影">
               <Camera size={21} weight="light" />
             </a>
-            <a href={isV2 ? "/daily#visual-practice" : "#playground"} aria-label="视觉练习">
+            <a href={isV2 ? sitePath("/daily#visual-practice") : "#playground"} aria-label="视觉练习">
               <PenNib size={21} weight="light" />
             </a>
           </div>
