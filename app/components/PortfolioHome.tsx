@@ -4,12 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
-  ArrowSquareOut,
   Brain,
   Camera,
   EnvelopeSimple,
   FigmaLogo,
-  FilePdf,
   LinkedinLogo,
   MouseSimple,
   PenNib,
@@ -416,46 +414,24 @@ export default function PortfolioHome({ version = "v1" }: { version?: "v1" | "v2
 
           <section className="about-experience" id="about" aria-labelledby="about-title">
             <div className="about-profile" data-reveal>
-              <p className="kicker">ABOUT / RESUME</p>
+              <p className="kicker">ABOUT / PROFILE</p>
               <h2 id="about-title">关于我</h2>
               <p className="about-lead">
                 我关注复杂产品如何被理解、被使用，也关注视觉语言如何帮助团队建立一致的判断。
                 从需求梳理到交付落地，我希望设计既有清晰结构，也保留恰到好处的表现力。
               </p>
-              <dl className="about-facts">
-                <div><dt>专注方向</dt><dd>B 端产品 · 数据体验 · 视觉系统</dd></div>
-                <div><dt>设计原则</dt><dd>清晰优先 · 证据驱动 · 克制表达</dd></div>
-                <div><dt>协作方式</dt><dd>调研分析 · 原型验证 · 设计交付</dd></div>
-              </dl>
             </div>
 
-            <div className="resume-panel" data-reveal>
-              <a
-                className="resume-card"
-                href={sitePath("/assets/resume/xia-ui-ux-designer-resume.pdf")}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="在新标签页查看 XIA 的 PDF 简历"
-              >
-                <span className="resume-card-index">RESUME / PDF</span>
-                <span className="resume-document" aria-hidden="true">
-                  <FilePdf size={38} weight="light" />
-                  <i />
-                  <i />
-                  <i />
-                  <i />
-                </span>
-                <span className="resume-card-copy">
-                  <small>完整履历与能力概览</small>
-                  <strong>查看我的简历</strong>
-                  <span>工作经历、专业技能与代表项目集中整理于一份 PDF 文件中。</span>
-                </span>
-                <span className="resume-card-action">
-                  在线查看
-                  <ArrowSquareOut size={18} weight="light" aria-hidden="true" />
-                </span>
-                <span className="resume-card-meta">PDF · 1 PAGE · 中文</span>
-              </a>
+            <div className="about-resume-entry" data-reveal>
+              <span className="about-entry-index">PROFILE / 01</span>
+              <p>
+                从电商视觉到复杂 B 端产品，我持续在信息结构、交互效率与视觉系统之间寻找平衡，
+                并将经验沉淀为可复用的设计方法。
+              </p>
+              <Link className="about-resume-button" href="/resume">
+                查看简历
+                <ArrowRight size={17} weight="bold" aria-hidden="true" />
+              </Link>
             </div>
           </section>
 
@@ -617,13 +593,7 @@ export default function PortfolioHome({ version = "v1" }: { version?: "v1" | "v2
           {isV2 ? (
             <div className="footer-direct-contact">
               <a href="mailto:lingxiao0904@qq.com">lingxiao0904@qq.com</a>
-              <a
-                href={sitePath("/assets/resume/xia-ui-ux-designer-resume.pdf")}
-                target="_blank"
-                rel="noreferrer"
-              >
-                查看 PDF 简历
-              </a>
+              <Link href="/resume">查看简历</Link>
             </div>
           ) : null}
           <div className="social-links">
