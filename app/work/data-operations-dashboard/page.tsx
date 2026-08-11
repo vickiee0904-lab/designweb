@@ -22,7 +22,7 @@ const navigationChapters = [
 ];
 
 const imagePath = (page: number) =>
-  `/assets/portfolio/data-operations-dashboard/page-${String(page).padStart(2, "0")}.png`;
+  `/assets/portfolio/data-operations-dashboard/page-${String(page).padStart(2, "0")}.webp`;
 
 export default function DataOperationsDashboardPage() {
   const [activeChapter, setActiveChapter] = useState(navigationChapters[0].id);

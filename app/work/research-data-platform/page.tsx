@@ -15,7 +15,7 @@ const chapters = [
 ];
 
 const imagePath = (page: number) =>
-  `/assets/portfolio/research-data-platform/page-${String(page).padStart(2, "0")}.png`;
+  `/assets/portfolio/research-data-platform/page-${String(page).padStart(2, "0")}.webp`;
 
 export default function ResearchDataPlatformPage() {
   const [activeChapter, setActiveChapter] = useState(chapters[0].id);

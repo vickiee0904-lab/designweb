@@ -33,7 +33,7 @@ const capabilities = [
 
 const projectCards = [
   {
-    src: "/assets/portfolio/research-data-platform-card-reference.png",
+    src: "/assets/portfolio/research-data-platform/page-01.webp",
     width: 3840,
     height: 2160,
     cardClass: "project-card-reference",
@@ -49,7 +49,7 @@ const projectCards = [
     ],
   },
   {
-    src: "/assets/portfolio/mobile-commerce/page-01.png",
+    src: "/assets/portfolio/mobile-commerce/page-01.webp",
     width: 3840,
     height: 2160,
     cardClass: "project-card-reference",
@@ -65,7 +65,7 @@ const projectCards = [
     ],
   },
   {
-    src: "/assets/portfolio/data-operations-dashboard/page-01.png",
+    src: "/assets/portfolio/data-operations-dashboard/page-01.webp",
     width: 3840,
     height: 2160,
     cardClass: "project-card-reference",
