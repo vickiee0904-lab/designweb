@@ -395,64 +395,6 @@ export default function PortfolioHome({ version = "v1" }: { version?: "v1" | "v2
 
       {isV2 ? (
         <>
-          <section className="project-impact" aria-labelledby="impact-title">
-            <header className="v2-section-heading" data-reveal>
-              <p className="kicker">PROJECT IMPACT</p>
-              <h2 id="impact-title">从界面走向结果</h2>
-              <p>不虚构数字，用可追踪的设计动作说明项目价值。</p>
-            </header>
-            <div className="impact-grid" data-reveal>
-              {impactItems.map((item) => (
-                <article key={item.index}>
-                  <span>{item.index}</span>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section className="about-experience" id="about" aria-labelledby="about-title">
-            <div className="about-profile" data-reveal>
-              <p className="kicker">ABOUT / PROFILE</p>
-              <h2 id="about-title">关于我</h2>
-              <p className="about-lead">
-                我关注复杂产品如何被理解、被使用，也关注视觉语言如何帮助团队建立一致的判断。
-                从需求梳理到交付落地，我希望设计既有清晰结构，也保留恰到好处的表现力。
-              </p>
-            </div>
-
-            <div className="about-resume-entry" data-reveal>
-              <span className="about-entry-index">PROFILE / 01</span>
-              <p>
-                从电商视觉到复杂 B 端产品，我持续在信息结构、交互效率与视觉系统之间寻找平衡，
-                并将经验沉淀为可复用的设计方法。
-              </p>
-              <Link className="about-resume-button" href="/resume">
-                查看简历
-                <ArrowRight size={17} weight="bold" aria-hidden="true" />
-              </Link>
-            </div>
-          </section>
-
-          <section className="work-process" aria-labelledby="process-title">
-            <header className="v2-section-heading" data-reveal>
-              <p className="kicker">HOW I WORK</p>
-              <h2 id="process-title">我的工作方式</h2>
-              <p>从问题出发，用验证和协作把体验推进到真实产品。</p>
-            </header>
-            <ol className="process-line" data-reveal>
-              {processItems.map((item) => (
-                <li key={item.index}>
-                  <span>{item.index}</span>
-                  <i aria-hidden="true" />
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                </li>
-              ))}
-            </ol>
-          </section>
-
           <section className="ai-collaboration" id="ai-collaboration" aria-labelledby="ai-title">
             <header className="v2-section-heading" data-reveal>
               <p className="kicker">AI × DESIGN SYSTEM</p>
@@ -542,6 +484,64 @@ export default function PortfolioHome({ version = "v1" }: { version?: "v1" | "v2
                 </li>
               ))}
             </ol>
+          </section>
+
+          <section className="project-impact" aria-labelledby="impact-title">
+            <header className="v2-section-heading" data-reveal>
+              <p className="kicker">PROJECT IMPACT</p>
+              <h2 id="impact-title">从界面走向结果</h2>
+              <p>不虚构数字，用可追踪的设计动作说明项目价值。</p>
+            </header>
+            <div className="impact-grid" data-reveal>
+              {impactItems.map((item) => (
+                <article key={item.index}>
+                  <span>{item.index}</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="work-process" aria-labelledby="process-title">
+            <header className="v2-section-heading" data-reveal>
+              <p className="kicker">HOW I WORK</p>
+              <h2 id="process-title">我的工作方式</h2>
+              <p>从问题出发，用验证和协作把体验推进到真实产品。</p>
+            </header>
+            <ol className="process-line" data-reveal>
+              {processItems.map((item) => (
+                <li key={item.index}>
+                  <span>{item.index}</span>
+                  <i aria-hidden="true" />
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          <section className="about-experience" id="about" aria-labelledby="about-title">
+            <div className="about-profile" data-reveal>
+              <p className="kicker">ABOUT / PROFILE</p>
+              <h2 id="about-title">关于我</h2>
+              <p className="about-lead">
+                我关注复杂产品如何被理解、被使用，也关注视觉语言如何帮助团队建立一致的判断。
+                从需求梳理到交付落地，我希望设计既有清晰结构，也保留恰到好处的表现力。
+              </p>
+            </div>
+
+            <div className="about-resume-entry" data-reveal>
+              <span className="about-entry-index">PROFILE / 01</span>
+              <p>
+                从电商视觉到复杂 B 端产品，我持续在信息结构、交互效率与视觉系统之间寻找平衡，
+                并将经验沉淀为可复用的设计方法。
+              </p>
+              <Link className="about-resume-button" href="/resume">
+                查看简历
+                <ArrowRight size={17} weight="bold" aria-hidden="true" />
+              </Link>
+            </div>
           </section>
         </>
       ) : null}
