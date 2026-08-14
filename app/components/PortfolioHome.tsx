@@ -15,7 +15,7 @@ import {
   Strategy,
   UserFocus,
 } from "@phosphor-icons/react";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
 import CharacterHero from "./CharacterHero";
 import FooterParticles from "./FooterParticles";
 import HeroAmbient from "./HeroAmbient";
@@ -161,18 +161,22 @@ function MagneticLink({
 }) {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
+  const handlePointerMove = (event: ReactPointerEvent<HTMLAnchorElement>) => {
+    if (event.pointerType !== "mouse") return;
+
+    const rect = event.currentTarget.getBoundingClientRect();
+    setOffset({
+      x: (event.clientX - rect.left - rect.width / 2) * 0.12,
+      y: (event.clientY - rect.top - rect.height / 2) * 0.16,
+    });
+  };
+
   return (
     <a
       className={`magnetic-link ${className}`}
       href={href}
       style={{ transform: `translate3d(${offset.x}px, ${offset.y}px, 0)` }}
-      onPointerMove={(event) => {
-        const rect = event.currentTarget.getBoundingClientRect();
-        setOffset({
-          x: (event.clientX - rect.left - rect.width / 2) * 0.12,
-          y: (event.clientY - rect.top - rect.height / 2) * 0.16,
-        });
-      }}
+      onPointerMove={handlePointerMove}
       onPointerLeave={() => setOffset({ x: 0, y: 0 })}
     >
       <span>{children}</span>
@@ -211,7 +215,7 @@ export default function PortfolioHome({ version = "v1" }: { version?: "v1" | "v2
       ref={rootRef}
       className={isV2 ? "portfolio-home portfolio-home-v2" : undefined}
       style={{
-        "--selected-work-ambient-image": `url("${sitePath("/assets/portfolio/selected-work-ambient.png")}")`,
+        "--selected-work-ambient-image": `url("${sitePath("/assets/portfolio/selected-work-ambient.webp")}")`,
       } as CSSProperties}
     >
       {isV2 ? <a className="skip-link" href="#work">跳至主要内容</a> : null}
@@ -233,11 +237,9 @@ export default function PortfolioHome({ version = "v1" }: { version?: "v1" | "v2
         <div className={`nav-links ${menuOpen ? "is-open" : ""}`}>
           <a href="#work" onClick={() => setMenuOpen(false)}>作品</a>
           <a href="#about" onClick={() => setMenuOpen(false)}>关于</a>
-          {isV2 ? (
-            <Link href="/daily" onClick={() => setMenuOpen(false)}>日常</Link>
-          ) : (
+          {!isV2 ? (
             <a href="#playground" onClick={() => setMenuOpen(false)}>日常</a>
-          )}
+          ) : null}
           <a href="#contact" onClick={() => setMenuOpen(false)}>联系</a>
         </div>
       </nav>
@@ -247,8 +249,8 @@ export default function PortfolioHome({ version = "v1" }: { version?: "v1" | "v2
         <div className="hero-copy" id={isV2 ? undefined : "about"}>
           <p className="kicker hero-kicker">产品思维 · 视觉表达 · AI 协作</p>
           <h1>
-            设计清晰、好用且
-            <span>富有表现力的数字体验。</span>
+            <span className="hero-title-line">设计清晰、好用且</span>
+            <span className="hero-title-line">富有表现力的数字体验。</span>
           </h1>
           <p className="hero-description">
             我是 XIA，一名专注产品体验与视觉系统的 UI 设计师。
@@ -278,6 +280,7 @@ export default function PortfolioHome({ version = "v1" }: { version?: "v1" | "v2
             <div
               className="project-deck"
               onPointerMove={(event) => {
+                if (event.pointerType !== "mouse") return;
                 const rect = event.currentTarget.getBoundingClientRect();
                 const x = (event.clientX - rect.left) / rect.width - 0.5;
                 const y = (event.clientY - rect.top) / rect.height - 0.5;
@@ -429,7 +432,7 @@ export default function PortfolioHome({ version = "v1" }: { version?: "v1" | "v2
                   ].map((title, index) => (
                     <span className={`ai-board-thumb ai-board-thumb-${index + 1}`} key={title}>
                       <Image
-                        src={sitePath("/assets/portfolio/ai-design-system/figma-design-system-overview.png")}
+                        src={sitePath("/assets/portfolio/ai-design-system/figma-design-system-overview.webp")}
                         alt=""
                         width={433}
                         height={1600}
@@ -571,7 +574,7 @@ export default function PortfolioHome({ version = "v1" }: { version?: "v1" | "v2
           </div>
           <div className="life-gallery" id="gallery" data-reveal>
             <Image
-              src={sitePath("/assets/portfolio/life-gallery.png")}
+              src={sitePath("/assets/portfolio/life-gallery.webp")}
               alt="山峰、静物、街头摄影、建筑绘画与植物摄影作品合集"
               width={731}
               height={208}
@@ -603,12 +606,16 @@ export default function PortfolioHome({ version = "v1" }: { version?: "v1" | "v2
             <a href="#top" aria-label="LinkedIn">
               <LinkedinLogo size={21} weight="light" />
             </a>
-            <a href={isV2 ? sitePath("/daily#photography") : "#playground"} aria-label="摄影">
-              <Camera size={21} weight="light" />
-            </a>
-            <a href={isV2 ? sitePath("/daily#visual-practice") : "#playground"} aria-label="视觉练习">
-              <PenNib size={21} weight="light" />
-            </a>
+            {!isV2 ? (
+              <>
+                <a href="#playground" aria-label="摄影">
+                  <Camera size={21} weight="light" />
+                </a>
+                <a href="#playground" aria-label="视觉练习">
+                  <PenNib size={21} weight="light" />
+                </a>
+              </>
+            ) : null}
           </div>
         </div>
         <div className="footer-meta">

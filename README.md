@@ -1,6 +1,6 @@
 # XIA Portfolio
 
-XIA 的个人设计网站，展示 UI/UX 项目、设计方法、AI 辅助设计实践、个人创作与联系方式。
+XIA 的个人设计网站，展示 UI/UX 项目、设计方法、AI 辅助设计实践与联系方式。
 
 网站采用深海军蓝视觉体系，包含磁吸极光、人物动态展示、透视项目卡片、粒子波浪与响应式交互。
 
@@ -26,7 +26,7 @@ npm run build
 
 - `/`：新版个人网站首页
 - `/v1`：首页历史版本
-- `/daily`：摄影、绘画与视觉练习
+- `/resume`：工作经历、能力与代表项目
 - `/work/research-data-platform`：科研数据管理平台案例
 - `/work/ai-sleep-companion`：移动端本地电商案例
 - `/work/data-operations-dashboard`：数据运营监控平台案例
@@ -34,8 +34,7 @@ npm run build
 ## 技术栈
 
 - React 19
-- Next.js / Vinext
-- Vite
+- Next.js 16
 - TypeScript
 - Phosphor Icons
 - Canvas / WebGL 动效
@@ -43,5 +42,6 @@ npm run build
 ## 常用命令
 
 - `npm run dev`: start local development
-- `npm run build`: verify the vinext build output
+- `npm run build`: verify the Next.js build output
+- `npm run build:pages`: export the GitHub Pages build
 - `npm run lint`: run code quality checks

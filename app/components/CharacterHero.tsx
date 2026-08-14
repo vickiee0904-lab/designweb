@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 import { sitePath } from "../lib/site-path";
 
 const characterFrames = [
-  sitePath("/assets/portfolio/character-hero/metro-pulse-laptop/frame-01.png"),
-  sitePath("/assets/portfolio/character-hero/metro-pulse-laptop/frame-02.png"),
-  sitePath("/assets/portfolio/character-hero/metro-pulse-laptop/frame-03.png"),
-  sitePath("/assets/portfolio/character-hero/metro-pulse-laptop/frame-04.png"),
+  sitePath("/assets/portfolio/character-hero/metro-pulse-laptop/frame-01.webp"),
+  sitePath("/assets/portfolio/character-hero/metro-pulse-laptop/frame-02.webp"),
+  sitePath("/assets/portfolio/character-hero/metro-pulse-laptop/frame-03.webp"),
+  sitePath("/assets/portfolio/character-hero/metro-pulse-laptop/frame-04.webp"),
 ];
 
 const motionPlan = [
@@ -52,8 +52,8 @@ export default function CharacterHero() {
             src={src}
             alt=""
             fill
-            priority
-            quality={92}
+            priority={index === 0}
+            quality={90}
             sizes="(max-width: 700px) 68vw, 460px"
             key={src}
           />
